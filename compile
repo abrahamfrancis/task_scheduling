@@ -1,0 +1,9 @@
+#!/bin/sh
+
+COMPILE_PARAMS="-pedantic-errors -Wall -Wextra \
+                -Wunused -Wunused-function -Wunused-label -Wunused-local-typedefs \
+                -Wunused-macros -Wunused-parameter  -Wno-unused-result \
+                -Wunused-value  -Wunused-variable -Wunused-const-variable \
+                -Wunused-but-set-parameter -Wunused-but-set-variable -Wuseless-cast"
+
+c++ -std=c++11 $COMPILE_PARAMS -lm *.cpp -o run
