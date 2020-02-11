@@ -6,8 +6,11 @@
 #include "schedule.hpp"
 
 int main(int argc, const char *argv[]) {
-	std::ifstream task_params("task_data/parameters", std::ios::in);
-	std::ifstream task_preced("task_data/precedence", std::ios::in);
+	if (argc == 1) {
+		std::ifstream task_params("task_data/parameters", std::ios::in);
+		std::ifstream task_preced("task_data/precedence", std::ios::in);
+	} else {
+	}
 	std::vector<task> tasks = read_tasks(task_params);
 	std::vector<edge> edges = read_edges(task_preced);
 	task_params.close();

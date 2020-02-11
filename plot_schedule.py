@@ -28,9 +28,13 @@ def extract(line):
 line = input('')
 li, ids = extract(line)
 plot_bars(2.5, li, ids)
+max1 = li[-1][0] + li[-1][1]
 
 line = input('')
 li, ids = extract(line)
 plot_bars(0.5, li, ids)
+max2 = li[-1][0] + li[-1][1]
+
+ax.text(50, 4, f'Total Time: {max(max1, max2)}ms')
 
 plot.show()
