@@ -5,6 +5,14 @@
 #include <fstream>
 #include <vector>
 
+const double f_HP_max  = 1.0,
+             f_LP_max  = 0.8,
+             P_HP_idle = 0.05,
+             P_LP_idle = 0.02,
+             tbls_threshold = 0.65,
+             a_HP = 1.0,
+             alpha_HP = 0.1;
+
 class task {
 private:
 	int id;
@@ -29,6 +37,16 @@ public:
 
 	int get_id() const {
 		return id;
+	}
+
+	double power_lp(double f=f_LP_max) const {
+		double f_cubed = f * f * f;
+		return a_LP * f_cubed + alpha_LP;
+	}
+
+	double power_hp(double f=f_HP_max) const {
+		double f_cubed = f * f * f;
+		return a_HP * f_cubed + alpha_HP;
 	}
 
 	void show() {

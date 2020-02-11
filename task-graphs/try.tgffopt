@@ -1,11 +1,11 @@
 tg_cnt 1
-task_cnt 10 1
+task_cnt 5 1
 prob_multi_start_nodes 0.20
 task_trans_time 10.0
 task_type_cnt 1
 trans_type_cnt 1
 
-seed 987120
+seed 98721276
 
 entries_per_type 2 0
 table_label COMMUN
