@@ -9,8 +9,10 @@ ax.set_yticks([0.5, 2.5])
 ax.set_yticklabels(['LP', 'HP'])
 ax.grid(True)
 
+energy = 0.0
+
 def plot_bars(y, li, ids):
-	ax.broken_barh(li, (y, 1), facecolors=('tab:blue', 'tab:green'), edgecolor='black')
+	ax.broken_barh(li, (y, 1), facecolors=('tab:blue', 'tab:green', 'tab:cyan'), edgecolor='black')
 
 	for i in range(0, len(li)):
 		ax.text(li[i][0] + li[i][1]/2, 1.1 + y, str(ids[i]))
