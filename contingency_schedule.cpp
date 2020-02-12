@@ -1,4 +1,4 @@
 #include "schedule.hpp"
 
-schedule contingency_schedule() {
+schedule schedule::contingency_schedule() {
 }

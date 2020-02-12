@@ -4,10 +4,12 @@
 
 #include <vector>
 #include <iomanip>
+#include <cmath>
 #include "adj_list.hpp"
 #include "task.hpp"
 
 const unsigned int MAX_DUR = 100; //100ms
+const double delta = 0.000001;
 
 typedef struct {
 	double start;
@@ -18,15 +20,16 @@ typedef struct {
 class schedule {
 private:
 	std::vector<slot> HP, LP;
+	double lp_time, hp_time;
 
 	void display(std::ofstream &stream, std::vector<slot> &P, char type) {
 		for (unsigned int i = 0; i < P.size(); ++i) {
 			if (i != 0) stream << ' ';
 			double size;
 			if (type == 'L') {
-				size = P[i].t.lp_size() * P[i].freq/f_LP_max;
+				size = P[i].t.lp_size() * f_LP_max/P[i].freq;;
 			} else {
-				size = P[i].t.size() * P[i].freq/f_HP_max;
+				size = P[i].t.size() * f_HP_max/P[i].freq;;
 			}
 			stream << P[i].t.get_id() << ' ' << P[i].start << ' ' << size << ' ' << P[i].freq;
 		}
@@ -36,16 +39,16 @@ private:
 	double energy_for(std::vector<slot> &P, double P_idle, char type, double &ended) {
 		double E = 0.0;
 		for (unsigned int i = 0; i < P.size(); ++i) {
-			if (ended != P[i].start) {
+			if (ended < P[i].start) {
 				E += (P[i].start - ended) * P_idle;
 			}
 			double size;
 			if (type == 'L') {
-				size = P[i].t.lp_size() * P[i].freq/f_LP_max;
-				E += size * P[i].t.power_lp();
+				size = P[i].t.lp_size() * f_LP_max/P[i].freq;
+				E += size * P[i].t.power_lp(P[i].freq);
 			} else {
-				size = P[i].t.size() * P[i].freq/f_HP_max;
-				E += size * P[i].t.power_hp();
+				size = P[i].t.size() * f_HP_max/P[i].freq;
+				E += size * P[i].t.power_hp(P[i].freq);
 			}
 			ended = P[i].start + size;
 		}
@@ -54,12 +57,25 @@ private:
 
 
 public:
-	void add_HP_slot(double start, task t, double freq=f_HP_max) {
-		HP.push_back({start, t, freq});
+	schedule() {
+		lp_time = hp_time = 0.0;
 	}
 
-	void add_LP_slot(double start, task t, double freq=f_LP_max) {
-		LP.push_back({start, t, freq});
+	void wait() {
+		lp_time = hp_time = std::max(lp_time, hp_time);
+	}
+
+	double lpt() const { return lp_time; }
+	double hpt() const { return hp_time; }
+
+	void add_HP_slot(task t, double freq=f_HP_max) {
+		HP.push_back({hp_time, t, freq});
+		hp_time += t.size() * f_HP_max/freq;
+	}
+
+	void add_LP_slot(task t, double freq=f_LP_max) {
+		LP.push_back({lp_time, t, freq});
+		lp_time += t.lp_size() * f_LP_max/freq;
 	}
 
 	double energy() {
@@ -92,6 +108,9 @@ public:
 		display(stream, LP, 'L');
 		stream << std::setprecision(15) << std::fixed << energy() << std::endl;
 	}
+
+	schedule uniform_scale();
+	schedule contingency_schedule();
 };
 
 std::vector<int> parent_task_count(const adj_list &);
@@ -100,8 +119,6 @@ std::vector<int> parent_task_count(const adj_list &);
 schedule ltf_schedule(const std::vector<task> &, const adj_list &);
 
 // Threshold-based List Scheduling
-schedule tbls_schedule(const std::vector<task> &, const adj_list &);
-
-schedule contingency_schedule();
+schedule tbls_schedule(const std::vector<task> &, const adj_list &, double);
 
 #endif

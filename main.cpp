@@ -26,5 +26,9 @@ int main(int argc, const char *argv[]) {
 	std::ofstream ltf_sched("ltf-schedule", std::ios::out);
 	ltf.show(ltf_sched);
 	ltf_sched.close();
+
+	ltf_sched.open("ltf-schedule-us", std::ios::out);
+	ltf.uniform_scale().show(ltf_sched);
+	ltf_sched.close();
 	return 0;
 }

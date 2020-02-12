@@ -1,20 +1,26 @@
 tg_cnt 1
-task_cnt 5 1
-prob_multi_start_nodes 0.20
+task_cnt 3 2
+prob_multi_start_nodes 0.01
 task_trans_time 10.0
 task_type_cnt 1
 trans_type_cnt 1
 
-seed 98721276
+seed 90
 
-entries_per_type 2 0
+#entries_per_type 2 0
 table_label COMMUN
 table_cnt 2
+# task_attrib \
+# 	w 10 9, \
+# 	W 35 25, \
+# 	A 0.50 0.49, \
+# 	a 0.050 0.049
 task_attrib \
-	w 10 9, \
-	W 35 25, \
-	A 0.50 0.49, \
-	a 0.050 0.049
+	C 8 7, \
+	t 1.85 0.45, \
+# [1.4, 2.3]
+	i 1.75 0.35
+# [1.4, 2.1]
 
 tg_write
 eps_write
