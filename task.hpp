@@ -60,6 +60,12 @@ public:
 	}
 };
 
+struct compare_task_by_size {
+	bool operator()(const task &t1, const task &t2) {
+		return t1.size() < t2.size();
+	}
+};
+
 typedef std::pair<int, int> edge;
 
 std::vector<task> read_tasks(std::ifstream &);
