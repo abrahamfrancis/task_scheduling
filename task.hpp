@@ -12,6 +12,7 @@ const double f_HP_max  = 1.0,
              tbls_threshold = 0.65,
              a_HP = 1.0,
              alpha_HP = 0.1;
+const int MAX_TASKs = 100;
 
 class task {
 private:
@@ -37,6 +38,14 @@ public:
 
 	int get_id() const {
 		return id;
+	}
+
+	double get_a_LP() const {
+		return a_LP;
+	}
+
+	double get_alpha_LP() const {
+		return alpha_LP;
 	}
 
 	double power_lp(double f=f_LP_max) const {

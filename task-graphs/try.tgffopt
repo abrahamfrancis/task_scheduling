@@ -5,7 +5,7 @@ task_trans_time 10.0
 task_type_cnt 1
 trans_type_cnt 1
 
-seed 90
+seed 67
 
 #entries_per_type 2 0
 table_label COMMUN

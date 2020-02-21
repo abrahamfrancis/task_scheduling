@@ -16,19 +16,33 @@ int main(int argc, const char *argv[]) {
 		std::cerr << "Could not open task file!" << std::endl;
 		return 1;
 	}
+	std::cout << "Reading File...";
 	std::vector<task> tasks = read_tasks(task_data);
 	std::vector<edge> edges = read_edges(task_data);
 	task_data.close();
 
 	adj_list graph = list_from_edges(edges, tasks.size());
+	std::cout << "done." << std::endl;
 
+	std::cout << "Generating LTF...";
 	schedule ltf = ltf_schedule(tasks, graph);
 	std::ofstream ltf_sched("ltf-schedule", std::ios::out);
 	ltf.show(ltf_sched);
 	ltf_sched.close();
+	std::cout << "done." << std::endl;
 
-	ltf_sched.open("ltf-schedule-us", std::ios::out);
-	ltf.uniform_scale().show(ltf_sched);
+	std::cout << "Generating LTF (contingency)...";
+	schedule ltf_cs = contingency_schedule(ltf);
+	ltf_sched.open("ltf-schedule-cs", std::ios::out);
+	ltf_cs.show(ltf_sched);
 	ltf_sched.close();
+	std::cout << "done." << std::endl;
+
+	std::cout << "Generating LTF-US...";
+	schedule ltf_us = uniform_scale(ltf);
+	ltf_sched.open("ltf-schedule-us", std::ios::out);
+	ltf_us.show(ltf_sched);
+	ltf_sched.close();
+	std::cout << "done." << std::endl;
 	return 0;
 }

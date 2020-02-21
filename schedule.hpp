@@ -31,7 +31,12 @@ private:
 			} else {
 				size = P[i].t.size() * f_HP_max/P[i].freq;;
 			}
-			stream << P[i].t.get_id() << ' ' << P[i].start << ' ' << size << ' ' << P[i].freq;
+			if (P[i].t.get_id() >= MAX_TASKs) {
+				stream << 2*MAX_TASKs - 1 - P[i].t.get_id() << "' ";
+			} else {
+				stream << P[i].t.get_id() << ' ';
+			}
+			stream << P[i].start << ' ' << size << ' ' << P[i].freq;
 		}
 		stream << std::endl;
 	}
@@ -109,8 +114,8 @@ public:
 		stream << std::setprecision(15) << std::fixed << energy() << std::endl;
 	}
 
-	schedule uniform_scale();
-	schedule contingency_schedule();
+	friend schedule uniform_scale(const schedule &);
+	friend schedule contingency_schedule(const schedule &);
 };
 
 std::vector<int> parent_task_count(const adj_list &);
