@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
 	std::cout << "done." << std::endl;
 
 	std::cout << "Generating LTF-US...";
-	schedule ltf_us = uniform_scale(ltf);
+	schedule ltf_us = uniform_scale(ltf, ltf_cs);
 	ltf_sched.open("ltf-schedule-us", std::ios::out);
 	ltf_us.show(ltf_sched);
 	ltf_sched.close();

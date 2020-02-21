@@ -114,7 +114,7 @@ public:
 		stream << std::setprecision(15) << std::fixed << energy() << std::endl;
 	}
 
-	friend schedule uniform_scale(const schedule &);
+	friend schedule uniform_scale(const schedule &, const schedule &);
 	friend schedule contingency_schedule(const schedule &);
 };
 

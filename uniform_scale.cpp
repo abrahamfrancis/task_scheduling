@@ -1,7 +1,21 @@
 #include "schedule.hpp"
 
-schedule uniform_scale(const schedule &sched) {
-	double f_lp = 0.65, f_hp = 0.81;
+schedule uniform_scale(const schedule &sched, const schedule &sched_cs) {
+	auto scale_freq = [] (const std::vector<slot> &s, const std::vector<slot> &cs, char mode) {
+		double S, S_max=0.0;
+		for (int i = 0, j = 0; i < s.size() && j < cs.size(); ++i) {
+			while (j < cs.size() && cs[j].t.get_id() + s[i].t.get_id() + 1 != 2*MAX_TASKs) ++j;
+			double size = (mode == 'H' ? s[i].t.size() : s[i].t.lp_size());
+			S = (s[i].start + size) / cs[j].start;
+			if (S > S_max) S_max = S;
+		}
+		return S_max;
+	};
+	double f_lp, f_hp,
+	       S = std::max(scale_freq(sched.LP, sched_cs.HP, 'L'), scale_freq(sched.HP, sched_cs.LP, 'H'));
+	if (S > 1.0) S = 1.0;
+	f_lp = S*f_LP_max;
+	f_hp = S*f_HP_max;
 	schedule scaled;
 	unsigned int i = 0, j = 0;
 	while (i < sched.LP.size() && j < sched.HP.size()) {
