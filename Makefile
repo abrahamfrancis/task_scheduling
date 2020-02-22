@@ -32,6 +32,17 @@ run: main.o \
 	@$(LINK) $(TO) $@ $(filter %.o,$^)
 	@echo
 
+plot_data: plot.o \
+           list_from_edges.o read_edges.o read_tasks.o \
+           parent_task_count.o \
+           ltf_schedule.o tbls_schedule.o contingency_schedule.o uniform_scale.o
+	$(REPORT)
+	@echo "***** Linking -> $@"
+	@$(LINK) $(TO) $@ $(filter %.o,$^)
+	@echo
+
+plot.o: plot.cpp task.hpp adj_list.hpp schedule.hpp
+
 main.o: main.cpp task.hpp adj_list.hpp schedule.hpp
 
 contingency_schedule.o: contingency_schedule.cpp schedule.hpp

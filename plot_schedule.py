@@ -4,7 +4,7 @@ import matplotlib.pyplot as plot
 
 fig, ax = plot.subplots()
 
-ax.set_xlim(-20, 120)
+ax.set_xlim(-50, 150)
 Y_max=10
 ax.set_ylim(0, Y_max)
 ax.set_xlabel('Time')

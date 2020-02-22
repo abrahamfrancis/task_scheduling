@@ -5,13 +5,14 @@ std::vector<task> read_tasks(std::ifstream &stream) {
 	int count;
 	stream >> count;
 	double W_HP, W_LP, a_LP, alpha_LP;
-	double C, A, tscale, pscale, inv_ratio;
+	double C_HP, C_LP, A, tscale, pscale, inv_ratio;
 	char buff;
 	for (int id = 0; id < count; ++id) {
-		stream >> buff >> C >> buff >> tscale >> buff >> inv_ratio;
+		stream >> buff >> C_HP >> buff >> tscale >> buff >> inv_ratio;
 		pscale = 1/(tscale*inv_ratio);
-		W_HP = C/f_HP_max;
-		W_LP = tscale * W_HP;
+		C_LP = tscale * C_HP;
+		W_HP = C_HP/f_HP_max;
+		W_LP = C_LP/f_LP_max;
 		a_LP = pscale * a_HP;
 		alpha_LP = pscale * alpha_HP;
 		task new_task = task(id, W_HP, W_LP, a_LP, alpha_LP);

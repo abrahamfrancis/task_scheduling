@@ -27,9 +27,9 @@ private:
 			if (i != 0) stream << ' ';
 			double size;
 			if (type == 'L') {
-				size = P[i].t.lp_size() * f_LP_max/P[i].freq;;
+				size = P[i].t.lp_size() * f_LP_max/P[i].freq;
 			} else {
-				size = P[i].t.size() * f_HP_max/P[i].freq;;
+				size = P[i].t.size() * f_HP_max/P[i].freq;
 			}
 			if (P[i].t.get_id() >= MAX_TASKs) {
 				stream << 2*MAX_TASKs - 1 - P[i].t.get_id() << "' ";
@@ -105,7 +105,23 @@ public:
 		} else if (hp_ended > lp_ended) {
 			E += (hp_ended - lp_ended) * P_LP_idle;
 		}
+
+		double end_time = std::max(lp_ended, hp_ended);
+		if (end_time < MAX_DUR) {
+			E += (MAX_DUR - end_time) * (P_LP_idle + P_HP_idle);
+		}
 		return E;
+	}
+
+	double utilization() {
+		double sigma_W_LP = 0.0;
+		for (const slot &s : HP) {
+			sigma_W_LP += s.t.lp_size();
+		}
+		for (const slot &s : LP) {
+			sigma_W_LP += s.t.lp_size();
+		}
+		return sigma_W_LP/MAX_DUR * 100.0;
 	}
 
 	void show(std::ofstream &stream) {
