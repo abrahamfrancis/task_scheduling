@@ -1,0 +1,14 @@
+#!/bin/sh
+
+i=2000
+MAX=10000
+
+while [ $i -lt $MAX ]; do
+	cat ../try.tgffopt > temp.tgffopt
+	printf "seed $i\ntg_write\neps_write" | cat >> temp.tgffopt
+	../tgff temp
+	mv temp.tgff "T$i.tgff"
+	mv temp.eps "T$i.eps"
+	((++i))
+	rm temp.tgffopt
+done
