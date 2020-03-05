@@ -48,5 +48,6 @@ schedule uniform_scale(const schedule &sched, const schedule &sched_cs) {
 		scaled.add_HP_slot(sched.HP[j].t, f_hp);
 		++j;
 	}
-	return scaled;
+	if   (scaled.energy() > sched.energy()) return sched;
+	else                                    return scaled;
 }

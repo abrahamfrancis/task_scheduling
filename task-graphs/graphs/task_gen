@@ -1,0 +1,29 @@
+#!/bin/sh
+
+i=1
+MAXD=100
+MAX1=100
+MAX2=10
+seed=412
+
+while [ $i -le $MAX1 ]; do
+	j=1
+	sum=$(echo "$i * $MAXD/$MAX1" | bc -l)
+	while [ $j -le $MAX2 ]; do
+		cat ../try.tgffopt > temp.tgffopt
+		bse=$(echo "$j + 10" | bc -l)
+		var=$(echo "$j + 5.5" | bc -l)
+		# seed=$(echo "$j*($j + 1)" | bc -l)
+		printf "seed $seed\ntask_attrib C $bse $var,t 1.85 0.45,i 1.75 0.35\ntg_write" | cat >> temp.tgffopt
+		../tgff temp
+		echo "$sum" | cat > "T$i-$j.tgff"
+		cat temp.tgff >> "T$i-$j.tgff"
+		mv temp.eps "T$i-$j.eps"
+		((++j))
+	done
+	((++i))
+done
+
+rm temp.tgff
+rm temp.vcg
+rm temp.tgffopt

@@ -23,7 +23,7 @@ LINK := $(CC) $(OPTS) $(L_OPTS)
 	@echo "***** Compiling -> $@"
 	@$(COMPILE) $(TO) $@ $<
 
-run: main.o \
+run.o: main.o \
      list_from_edges.o read_edges.o read_tasks.o \
      parent_task_count.o \
      ltf_schedule.o tbls_schedule.o contingency_schedule.o uniform_scale.o
@@ -32,7 +32,7 @@ run: main.o \
 	@$(LINK) $(TO) $@ $(filter %.o,$^)
 	@echo
 
-plot_data: plot.o \
+plot_data.o: plot.o \
            list_from_edges.o read_edges.o read_tasks.o \
            parent_task_count.o \
            ltf_schedule.o tbls_schedule.o contingency_schedule.o uniform_scale.o

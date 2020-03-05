@@ -41,7 +41,7 @@ private:
 		stream << std::endl;
 	}
 
-	double energy_for(std::vector<slot> &P, double P_idle, char type, double &ended) {
+	double energy_for(const std::vector<slot> &P, double P_idle, char type, double &ended) const {
 		double E = 0.0;
 		for (unsigned int i = 0; i < P.size(); ++i) {
 			if (ended < P[i].start) {
@@ -83,7 +83,7 @@ public:
 		lp_time += t.lp_size() * f_LP_max/freq;
 	}
 
-	double energy() {
+	double energy() const {
 		double E = 0.0;
 
 		if (LP.size() != 0 && HP.size() != 0) {
