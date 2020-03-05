@@ -31,7 +31,6 @@ int main(int argc, const char *argv[]) {
 		std::cout << "Generating LTF...";
 		schedule ltf = ltf_schedule(tasks, graph);
 		std::cout << "done." << std::endl;
-		plot_data << "";
 
 		std::cout << "Generating LTF (contingency)...";
 		schedule ltf_cs = contingency_schedule(ltf);
@@ -41,7 +40,22 @@ int main(int argc, const char *argv[]) {
 		schedule ltf_us = uniform_scale(ltf, ltf_cs);
 		std::cout << "done." << std::endl;
 
-		plot_data << ltf.utilization() << " " << ltf.energy() << " " << ltf_us.energy() << std::endl;
+		std::cout << "Generating TBLS...";
+		schedule tbls = tbls_schedule(tasks, graph);
+		std::cout << "done." << std::endl;
+
+		std::cout << "Generating TBLS (contingency)...";
+		schedule tbls_cs = contingency_schedule(tbls);
+		std::cout << "done." << std::endl;
+
+		std::cout << "Generating LTF-US...";
+		schedule tbls_us = uniform_scale(tbls, tbls_cs);
+		std::cout << "done." << std::endl;
+
+		plot_data << ltf.utilization() << " " << ltf.energy()     << " "
+		                                      << ltf_us.energy()  << " "
+											  << tbls.energy()    << " "
+											  << tbls_us.energy() << std::endl;
 		task_data.close();
 	}
 	plot_data.close();

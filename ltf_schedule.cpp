@@ -21,14 +21,12 @@ schedule ltf_schedule(const std::vector<task> &tasks, const adj_list &graph)
 	while (! ready_tasks.empty()) {
 		task ready = ready_tasks.top();
 		ready_tasks.pop();
-		double time;
 
 		if ((ltf.lpt() <= ltf.hpt()) && (ltf.lpt() + ready.lp_size() <= MAX_DUR)) {
 		// LP Slot is Free and current task will not exceed MAX_DUR
 			ltf.add_LP_slot(ready);
 			if (last_lp != -1) clear_tasks(ready_tasks, tasks, graph[last_lp], parent_tasks);
 			last_lp = ready.get_id();
-			time = ltf.lpt();
 
 			if (ltf.lpt() >= ltf.hpt() && last_hp != -1) {
 				clear_tasks(ready_tasks, tasks, graph[last_hp], parent_tasks);
@@ -39,7 +37,6 @@ schedule ltf_schedule(const std::vector<task> &tasks, const adj_list &graph)
 			ltf.add_HP_slot(ready);
 			if (last_hp != -1) clear_tasks(ready_tasks, tasks, graph[last_hp], parent_tasks);
 			last_hp = ready.get_id();
-			time = ltf.hpt();
 
 			if (ltf.hpt() >= ltf.lpt() && last_lp != -1) {
 				clear_tasks(ready_tasks, tasks, graph[last_lp], parent_tasks);
