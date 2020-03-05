@@ -26,7 +26,7 @@ LINK := $(CC) $(OPTS) $(L_OPTS)
 run.o: main.o \
      list_from_edges.o read_edges.o read_tasks.o \
      parent_task_count.o \
-     ltf_schedule.o tbls_schedule.o contingency_schedule.o uniform_scale.o
+     ltf_schedule.o tbls_schedule.o clear_tasks.o contingency_schedule.o uniform_scale.o
 	$(REPORT)
 	@echo "***** Linking -> $@"
 	@$(LINK) $(TO) $@ $(filter %.o,$^)
@@ -35,7 +35,7 @@ run.o: main.o \
 plot_data.o: plot.o \
            list_from_edges.o read_edges.o read_tasks.o \
            parent_task_count.o \
-           ltf_schedule.o tbls_schedule.o contingency_schedule.o uniform_scale.o
+           ltf_schedule.o tbls_schedule.o  clear_tasks.o contingency_schedule.o uniform_scale.o
 	$(REPORT)
 	@echo "***** Linking -> $@"
 	@$(LINK) $(TO) $@ $(filter %.o,$^)
@@ -49,7 +49,7 @@ contingency_schedule.o: contingency_schedule.cpp schedule.hpp
 
 list_from_edges.o: list_from_edges.cpp adj_list.hpp
 
-ltf_schedule.o: ltf_schedule.cpp task.hpp schedule.hpp
+ltf_schedule.o: ltf_schedule.cpp clear_tasks.cpp task.hpp schedule.hpp
 
 parent_task_count.o: parent_task_count.cpp schedule.hpp
 
@@ -57,7 +57,9 @@ read_edges.o: read_edges.cpp task.hpp
 
 read_tasks.o: read_tasks.cpp task.hpp
 
-tbls_schedule.o: tbls_schedule.cpp schedule.hpp task.hpp
+tbls_schedule.o: tbls_schedule.cpp clear_tasks.cpp schedule.hpp task.hpp
+
+clear_tasks.o: clear_tasks.cpp schedule.hpp task.hpp
 
 uniform_scale.o: uniform_scale.cpp schedule.hpp
 

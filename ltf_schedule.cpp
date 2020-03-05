@@ -1,24 +1,5 @@
-#include <queue>
-
 #include "schedule.hpp"
 #include "task.hpp"
-
-typedef std::priority_queue<task, std::vector<task>, compare_task_by_size> ready_list;
-
-void clear_tasks(ready_list &ready_tasks, const std::vector<task> &tasks,
-                 const std::vector<int> &adjacent, std::vector<int> &parent_tasks)
-/*	Reduces parent_tasks (left to execute)
-	for each adjacent node which are tasks dependent on the parent_task
-
-	Adds tasks with no dependencies to queue
- */
-{
-	for (int i : adjacent) {
-		if (--parent_tasks[i] == 0) {
-			ready_tasks.push(tasks[i]);
-		}
-	}
-}
 
 schedule ltf_schedule(const std::vector<task> &tasks, const adj_list &graph)
 {

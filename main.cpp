@@ -44,5 +44,26 @@ int main(int argc, const char *argv[]) {
 	ltf_us.show(ltf_sched);
 	ltf_sched.close();
 	std::cout << "done." << std::endl;
+
+	std::cout << "Generating TBLS...";
+	schedule tbls = tbls_schedule(tasks, graph);
+	std::ofstream tbls_sched("tbls-schedule", std::ios::out);
+	tbls.show(tbls_sched);
+	tbls_sched.close();
+	std::cout << "done." << std::endl;
+
+	std::cout << "Generating TBLS (contingency)...";
+	schedule tbls_cs = contingency_schedule(tbls);
+	tbls_sched.open("tbls-schedule-cs", std::ios::out);
+	tbls_cs.show(tbls_sched);
+	tbls_sched.close();
+	std::cout << "done." << std::endl;
+
+	std::cout << "Generating TBLS-US...";
+	schedule tbls_us = uniform_scale(tbls, tbls_cs);
+	tbls_sched.open("tbls-schedule-us", std::ios::out);
+	tbls_us.show(tbls_sched);
+	tbls_sched.close();
+	std::cout << "done." << std::endl;
 	return 0;
 }

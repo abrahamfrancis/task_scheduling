@@ -5,6 +5,7 @@
 #include <vector>
 #include <iomanip>
 #include <cmath>
+#include <queue>
 #include "adj_list.hpp"
 #include "task.hpp"
 
@@ -67,6 +68,7 @@ public:
 	}
 
 	void wait() {
+	// Make idle processor wait for running processor
 		lp_time = hp_time = std::max(lp_time, hp_time);
 	}
 
@@ -134,12 +136,16 @@ public:
 	friend schedule contingency_schedule(const schedule &);
 };
 
+typedef std::priority_queue<task, std::vector<task>, compare_task_by_size> ready_list;
+
+void clear_tasks(ready_list &, const std::vector<task> &, const std::vector<int> &, std::vector<int> &);
+
 std::vector<int> parent_task_count(const adj_list &);
 
 // Largest Task First
 schedule ltf_schedule(const std::vector<task> &, const adj_list &);
 
 // Threshold-based List Scheduling
-schedule tbls_schedule(const std::vector<task> &, const adj_list &, double);
+schedule tbls_schedule(const std::vector<task> &, const adj_list &, double=tbls_threshold);
 
 #endif
