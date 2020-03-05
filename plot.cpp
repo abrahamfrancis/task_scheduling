@@ -12,7 +12,7 @@ int main(int argc, const char *argv[]) {
 	}
 
 	std::ifstream task_data;
-	std::ofstream plot_data("plot-data", std::ios::out);
+	std::ofstream plot_data("energy-plot", std::ios::out);
 	for (int i = 1; i < argc; ++i) {
 		task_data.open(argv[i], std::ios::in);
 		if (! task_data.is_open()) {
