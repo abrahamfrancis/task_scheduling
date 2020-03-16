@@ -5,6 +5,7 @@
 * [X] Implemented Largest Task First Scheduling
 * [X] Implemented Threshold Based List Scheduling
 * [X] Implemented Uniform Scaling
+* [] Implemented Critical Path based Speed Scaling
 
 ## Contents
 
