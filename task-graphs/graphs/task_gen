@@ -3,7 +3,7 @@
 i=1
 MAXD=100
 MAX1=100
-MAX2=10
+MAX2=1000
 seed=412
 
 while [ $i -le $MAX1 ]; do

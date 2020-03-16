@@ -63,11 +63,13 @@ for i in range(len(utl)):
 	tbls[i] = tbls[i]/e_max * 100.0
 	tbls_us[i] = tbls_us[i]/e_max * 100.0
 
-ltf_line = ax.plot(utl, ltf, '.-', linewidth=0.2, markersize=3.0, color="red", label="LTF")
-ltf_us_line = ax.plot(utl, ltf_us, '.-', linewidth=0.2, markersize=3.0, color="orange", label="LTF US")
-tbls_line = ax.plot(utl, tbls, '.-', linewidth=0.2, markersize=3.0, color="blue", label="TBLS")
-tbls_us_line = ax.plot(utl, tbls_us, '.-', linewidth=0.2, markersize=3.0, color="purple", label="TBLS US")
+MARKER_SIZE=4.0
+LINE_WIDTH=0.2
 
-# fig.suptitle(f'Energy: {round(energy, 4)} mJ     Finish Time: {round(max(max1, max2), 4)} ms', fontsize=16)
+ltf_line = ax.plot(utl, ltf, '.-', linewidth=LINE_WIDTH, markersize=MARKER_SIZE, color="red", label="LTF")
+ltf_us_line = ax.plot(utl, ltf_us, '.-', linewidth=LINE_WIDTH, markersize=MARKER_SIZE, color="orange", label="LTF US")
+tbls_line = ax.plot(utl, tbls, '.-', linewidth=LINE_WIDTH, markersize=MARKER_SIZE, color="blue", label="TBLS")
+tbls_us_line = ax.plot(utl, tbls_us, '.-', linewidth=LINE_WIDTH, markersize=MARKER_SIZE, color="purple", label="TBLS US")
+
 fig.legend(markerscale=4, fontsize=10)
 plot.show()
