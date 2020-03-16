@@ -55,7 +55,7 @@ python3 plot_schedule.py < ltf-schedule-us
 * ```plot_data.o``` is the executable responsible for generating energy information for each schedule
 * To execute it run ```./plot_data.o <list of tgff-files>```. For example,
 ```shell
-./run.o task-graphs/graphs/*.tgff
+./plot_data.o task-graphs/graphs/*.tgff
 # Runs the scheduler on the generated testcases
 ```
 > Note, this will take some time (~10 seconds) and you might have to increase your stack limit temporarily using ```ulimit``` in Linux. I have included the generated files in case you are unable to.
